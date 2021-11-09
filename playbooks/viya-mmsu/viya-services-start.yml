@@ -165,6 +165,17 @@
       script: viya-svs.sh start sas-viya-cachelocator-default sas-viya-cacheserver-default
       when: enable_svs_alternative|bool == true
 
+- hosts: elasticsearch
+  become: yes
+  become_user: root
+  gather_facts: false
+  any_errors_fatal: true
+  vars_files:
+    - viya-services-vars.yml
+  tasks:
+    - name: Start Elasticsearch
+      script: viya-svs.sh start sas-viya-svi-elasticsearch-default
+      
 - hosts: sas_all
   become: yes
   become_user: root
@@ -177,7 +188,7 @@
       script: viya-svs-alternative.sh 1 start
       when: enable_svs_alternative|bool == true
 
-- hosts: consul,rabbitmq,httpproxy,pgpoolc,sasdatasvrc,sas_casserver_primary
+- hosts: consul,rabbitmq,httpproxy,pgpoolc,sasdatasvrc,sas_casserver_primary,elasticsearch
   become: yes
   become_user: root
   gather_facts: false
