@@ -251,3 +251,41 @@
         delay: "{{svas_delay_timer}}"
 
       when: enable_svs_alternative|bool != true
+
+- hosts: rabbitmq
+  become: yes
+  become_user: root
+  gather_facts: false
+  any_errors_fatal: true
+  vars_files:
+    - viya-services-vars.yml
+  tasks:
+    
+      - name: Start service zookeeper 
+        ansible.builtin.service:
+          name: zookeeper
+          state: started
+    
+      - name: Start service zookeeper 
+        ansible.builtin.service:
+          name: zookeeper
+          state: started
+          
+- hosts: BusinessOrchestration
+  become: yes
+  become_user: root
+  gather_facts: false
+  any_errors_fatal: true
+  vars_files:
+    - viya-services-vars.yml
+  tasks:
+    
+      - name: Start service REDIS
+        ansible.builtin.service:
+          name: redis
+          state: started
+    
+      - name: Start service BOSS and SASRTSNG 
+        ansible.builtin.service:
+          name: boss
+          state: started
