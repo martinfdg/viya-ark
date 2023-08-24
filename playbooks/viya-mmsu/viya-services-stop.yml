@@ -42,6 +42,44 @@
         deployhostnum: "{{groups['sas_all'] | length }}"
         check_mode: no
 
+- hosts: BusinessOrchestration
+  become: yes
+  become_user: root
+  gather_facts: false
+  any_errors_fatal: true
+  vars_files:
+    - viya-services-vars.yml
+  tasks:
+
+      - name: Stop boss and SAS RTSNG
+        ansible.builtin.service:
+          name: boss
+          state: stopped
+
+      - name: Stop Redis
+        ansible.builtin.service:
+          name: redis
+          state: stopped
+
+- hosts: rabbitmq
+  become: yes
+  become_user: root
+  gather_facts: false
+  any_errors_fatal: true
+  vars_files:
+    - viya-services-vars.yml
+  tasks:
+
+      - name: Stop service zookeeper
+        ansible.builtin.service:
+          name: kafka
+          state: stopped
+
+      - name: Start service zookeeper
+        ansible.builtin.service:
+          name: zookeeper
+          state: stopped
+
 - hosts: sas_all
   become: yes
   become_user: root
