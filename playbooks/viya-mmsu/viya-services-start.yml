@@ -266,9 +266,9 @@
           name: zookeeper
           state: started
     
-      - name: Start service zookeeper 
+      - name: Start service kafka 
         ansible.builtin.service:
-          name: zookeeper
+          name: kafka
           state: started
           
 - hosts: BusinessOrchestration
